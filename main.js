@@ -20,36 +20,68 @@ class User{
     }
 }
 
-buttons = document.querySelectorAll("button") //! not working, first problem
-fullLoginForm = document.querySelectorAll("form"); 
-console.log(buttons)
+//defining Elements to use
+fullLoginForm = document.querySelectorAll("form")[0].querySelectorAll("input");
+fullSignForm = document.querySelectorAll("form")[1].querySelectorAll("input"); 
+console.log(fullSignForm)
 
-const SignInFirst = () =>{
+statusSignText = document.getElementById("signInStatusShow")
+
+const SignInFirst = () => {
+    statusSignText.style.color = "greenyellow";
     document.getElementById("checkPasswordSignIn").hidden = false
     document.getElementById("checkPassBr").hidden = false
 
-    document.getElementById("SignInButton").onclick = function () { SignIn() }; //notworking
-    if(document.getElementById("signInStatusShow").textContent !== undefined ){
-        document.getElementById("signInStatusShow").textContent = undefined 
+    document.getElementById("SignInButton").onclick = function(){ SignIn(fullSignForm[0].value, fullSignForm[1].value, fullSignForm[2].value, fullSignForm[3].value) }; //notworking
+    if(statusSignText.textContent !== undefined ){
+        statusSignText.textContent = undefined 
     }
 }
 
-const SignIn = (signEmail, signUser, SignPassword) => {
-    signInputs = [signEmail, signUser, SignPassword]
+const resetSignIn = () => {
+    //TODO: add condition if spaces are missing
+
+
+    document.getElementById("checkPasswordSignIn").hidden = true
+    document.getElementById("checkPassBr").hidden = true
+
+    document.getElementById("SignInButton").onclick = function(){ SignInFirst(); };
+    
+    fullSignForm[0].value = null
+    fullSignForm[1].value = null
+    fullSignForm[2].value = null
+    fullSignForm[3].value = null
+}
+
+const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
+
+    //checkPassword validation
+    if (signPassword != confirmPassword){
+        statusSignText.style.color = "red";
+        statusSignText.textContent = "Password Check Failed!"
+        resetSignIn()
+        console.error("Sign In Failed!")
+
+        return //!: não está parando, learn try/catch
+    }
+    
+    signInputs = [signEmail, signUser, signPassword]
+    //TODO: check if email is unique
+
+    //TODO: check if email has @; check if username has a char.
+
+
     newUser1 = new User(...signInputs)
     Users.offline.push(newUser1)
 
     //show success
     console.log("User Signed!")
     document.getElementById("signInStatusShow").textContent = "User Successfully Signed!"
-    
 
     //return to initial state
-    document.getElementById("checkPasswordSignIn").hidden = true
-    document.getElementById("checkPassBr").hidden = true
+    resetSignIn()
 
-    document.getElementById("SignInButton").onclick = function () { SignInFirst(); };
-    //TODO: add inputs value's reset
+    return 0
 }
 
 
