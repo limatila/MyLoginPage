@@ -1,0 +1,29 @@
+body{
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+div{
+    padding-bottom: 0.5rem ;
+    padding-top: 0.1rem ;
+    border-collapse: collapse;
+
+    border: 1rem #000;  /*TODO: add border line */
+    border-radius: 0.1rem;
+}
+button{
+    cursor: pointer;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    border-radius: 0.5rem;
+}
+form{
+    border-collapse: collapse;
+}
+:placeholder-shown{
+    opacity: calc(90%);;
+}
+
+
+#signInStatusShow{
+    color: greenyellow;
+}

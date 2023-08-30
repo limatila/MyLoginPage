@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+    <head>
+        <title>Login</title>
+        
+
+        <link rel="icon" type="image/x-icon" href="">
+        <link rel="stylesheet" href="configs.css">
+    </head>
+    <body>
+        <nav>
+            <a href=""><button style="cursor: crosshair; float: left;">Reload</button></a>
+        </nav>
+        <br>
+
+
+        <h1>Welcome to this WebPage
+        <h2>you shall login or create an account</h2>
+
+        <br><br><br>
+        <div id="login">
+            <h3>Log In</h3>
+            <h3 id="loginStatusShow"></h3>
+            <form action="logged.html" id="loginForm">
+                <input type="email" placeholder="Email Signed Here"><br>
+                <input type="password" placeholder="Your Password" maxlength="16"><br>
+                <button onclick="LogIn()">LOGIN!</button>
+            </form>
+        </div>
+
+        <br><br>
+        <div id="signin">
+            <h3>Sign In</h3>
+            <h3 id="signInStatusShow"></h3>
+            <form id="signForm" onsubmit="return false">
+                <input type="email" id="emailSignIn" placeholder="abc@email.co"><br>
+                <input type="text" id="userNameSignIn" placeholder="Create an Username" maxlength="15"><br>
+                <input type="password" id="PasswordSignIn" placeholder="Create a password" maxlength="16"><br>
+                <input type="password" id="checkPasswordSignIn" placeholder="Confirm your password!" maxlength="16" hidden="true" ><br id="checkPassBr" hidden="true"><!-- TODO verification -->
+                <button onclick="SignInFirst()" id="SignInButton">CREATE ACCOUNT!</button> <!-- TODO '.setAttribute()' -->
+            </form>
+        </div>
+
+        <br><br><br><br><br><br><br><br>
+        <p style="font-size: x-small;">OBS: This is a simples site to administrate a imaginary set of users, <br> with LogIns, SignIns and storage of the users</p>
+
+
+        <script src="main.js"></script>
+    </body>
+</html>
