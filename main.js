@@ -4,7 +4,7 @@ Users = {
     'description': `This is a storage for all users in the site`,
     'offline': [0,],
     'online': [0,],
-    //banned?
+    'banned': [0,]
 }
 
 class User{
@@ -38,6 +38,11 @@ const SignInFirst = () => {
     }
 }
 
+const userCount = (type) => {
+    quantityUsers = Users[type].length - 1
+    Users["type"][0] = quantityUsers
+}//!not working
+
 const resetSignIn = () => {
     //TODO: add condition if spaces are missing
 
@@ -66,9 +71,9 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     }
     
     signInputs = [signEmail, signUser, signPassword]
-    //TODO: check if email is unique
-
     //TODO: check if email has @; check if username has a char.
+    
+    //TODO: check if email is unique
 
 
     newUser1 = new User(...signInputs)
@@ -87,7 +92,7 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
 
 //LogIn deve acessar a memória do banco e verificar se as infos do input coincidem
 const LogIn = (uservar) => {
-    Users.offline[0] = Users.offline.length; //setting counter
+
 
     uservar.push(Users[online])
 }
