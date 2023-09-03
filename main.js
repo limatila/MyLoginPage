@@ -32,7 +32,7 @@ console.log(fullSignForm)
 statusSignText = document.getElementById("signInStatusShow")
 
 //secondary functions
-const checkInputs = () => {
+const checkMissingSpaces = () => { //! to finish.
     missingSpaces = false
     for (var i = 0; i < fullSignForm.length; i++) {
         if (fullSignForm[i].value === null || undefined || false) {
@@ -94,7 +94,7 @@ const SignInFirst = () => {
 const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     //TODO: add condition if spaces are missing
     //check if inputs are missing
-    checkInputs()
+    checkMissingSpaces()
     
     //checkPassword validation
     if (signPassword != confirmPassword){
