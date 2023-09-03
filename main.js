@@ -2,12 +2,16 @@
 //Ao aceitar os dados, um objeto da classe User deve ser criado e movido para a memória do banco
 Users = {
     'description': `This is a storage for all users in the site`,
-    'offline': [0,],
-    'online': [0,],
-    'banned': [0,]
+    'offline': [],
+    'online': [],
+    'banned': [],
+
+    offlineCount: 0,
+    onlineCount: 0,
+    bannedCount: 0
 }
 
-class User{
+class User{ //should change to save in files
     constructor(email, userName, password){
         this.email = email
         this.userName = userName
@@ -27,6 +31,55 @@ console.log(fullSignForm)
 
 statusSignText = document.getElementById("signInStatusShow")
 
+//secondary functions
+const checkInputs = () => {
+    missingSpaces = false
+    for (var i = 0; i < fullSignForm.length; i++) {
+        if (fullSignForm[i].value === null || undefined || false) {
+            missingSpaces = true
+            break
+        }
+        console.log("iterating ", i)
+        console.log("value ", i, fullSignForm[i].value)
+    }
+    if (missingSpaces === true) {
+        alert("Fill all Sign In Spaces!")
+        throw console.error("Fill all spaces!")
+    }
+}
+
+//to use in login and signin
+const userCount = (type) => {
+    quantityUsers = Users[type].length
+    switch(type){
+        case 'offline':{
+            Users['offlineCount'] = quantityUsers;
+            break;
+        }
+        case 'online':{
+            Users['onlineCount'] = quantityUsers;
+            break;
+        }
+        case 'banned':{
+            Users['bannedCount'] = quantityUsers;
+            break;
+        }
+    }
+}
+
+//when finished or failed
+const resetSignIn = () => {
+    document.getElementById("checkPasswordSignIn").hidden = true
+    document.getElementById("checkPassBr").hidden = true
+    document.getElementById("SignInButton").onclick = function(){ SignInFirst(); };
+    
+    fullSignForm[0].value = null
+    fullSignForm[1].value = null
+    fullSignForm[2].value = null
+    fullSignForm[3].value = null
+}
+
+//primary sign functions
 const SignInFirst = () => {
     statusSignText.style.color = "greenyellow";
     document.getElementById("checkPasswordSignIn").hidden = false
@@ -38,36 +91,17 @@ const SignInFirst = () => {
     }
 }
 
-const userCount = (type) => {
-    quantityUsers = Users[type].length - 1
-    Users["type"][0] = quantityUsers
-}//!not working
-
-const resetSignIn = () => {
-    //TODO: add condition if spaces are missing
-
-
-    document.getElementById("checkPasswordSignIn").hidden = true
-    document.getElementById("checkPassBr").hidden = true
-
-    document.getElementById("SignInButton").onclick = function(){ SignInFirst(); };
-    
-    fullSignForm[0].value = null
-    fullSignForm[1].value = null
-    fullSignForm[2].value = null
-    fullSignForm[3].value = null
-}
-
 const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
-
+    //TODO: add condition if spaces are missing
+    //check if inputs are missing
+    checkInputs()
+    
     //checkPassword validation
     if (signPassword != confirmPassword){
         statusSignText.style.color = "red";
         statusSignText.textContent = "Password Check Failed!"
         resetSignIn()
-        console.error("Sign In Failed!")
-
-        return //!: não está parando, learn try/catch
+        throw console.error("Sign In Failed!") //!: não está parando, learn try/catch
     }
     
     signInputs = [signEmail, signUser, signPassword]
@@ -85,6 +119,9 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
 
     //return to initial state
     resetSignIn()
+
+    //attribute to counter
+    userCount("offline")
 
     return 0
 }
