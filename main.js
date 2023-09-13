@@ -84,7 +84,7 @@ const SignInFirst = () => {
     document.getElementById("checkPasswordSignIn").hidden = false
     document.getElementById("checkPassBr").hidden = false
 
-    document.getElementById("SignInButton").onclick = function(){ SignIn(fullSignForm[0].value, fullSignForm[1].value, fullSignForm[2].value, fullSignForm[3].value) }; //notworking
+    document.getElementById("SignInButton").onclick = function(){ SignIn(fullSignForm[0].value, fullSignForm[1].value, fullSignForm[2].value, fullSignForm[3].value) };
     if(statusSignText.textContent !== undefined ){
         statusSignText.textContent = undefined 
     }
