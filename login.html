@@ -14,15 +14,15 @@
 
 
         <h1>Welcome to this WebPage</h1>
-        <h2>you shall login or create an account</h2>
+        <h2>you shall login or <wbr>create an account</h2>
 
         <br><br><br>
         <div id="login">
             <h3>Log In</h3>
             <h3 id="loginStatusShow"></h3>
-            <form action="logged.html" id="loginForm">
-                <input type="email" placeholder="Email Signed Here"><br>
-                <input type="password" placeholder="Your Password" maxlength="16"><br>
+            <form action="logged.html" id="loginForm" spellcheck="false">
+                <input type="email" placeholder="Email Signed Here" autocomplete="off" required autofocus><br>
+                <input type="password" placeholder="Your Password" maxlength="16" required><br>
                 <button onclick="LogIn()">LOGIN!</button>
             </form>
         </div>
@@ -31,10 +31,10 @@
         <div id="signin">
             <h3>Sign In</h3>
             <h3 id="signInStatusShow"></h3>
-            <form id="signForm" onsubmit="return false">
-                <input type="email" id="emailSignIn" placeholder="abc@email.co"><br>
-                <input type="text" id="userNameSignIn" placeholder="Create an Username" maxlength="15"><br>
-                <input type="password" id="PasswordSignIn" placeholder="Create a password" maxlength="16"><br>
+            <form id="signForm" onsubmit="return false" spellcheck="false" autocomplete="off">
+                <input type="email" id="emailSignIn" placeholder="abc@email.co" required><br>
+                <input type="text" id="userNameSignIn" placeholder="Create an Username" maxlength="15" required><br>
+                <input type="password" id="PasswordSignIn" placeholder="Create a password" maxlength="16" required><br>
                 <input type="password" id="checkPasswordSignIn" placeholder="Confirm your password!" maxlength="16" hidden="true" ><br id="checkPassBr" hidden="true"><!-- TODO verification -->
                 <button onclick="SignInFirst()" id="SignInButton">CREATE ACCOUNT!</button> <!-- TODO '.setAttribute()' -->
             </form>

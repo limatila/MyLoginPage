@@ -25,26 +25,25 @@ class User{ //should change to save in files
 }
 
 //defining Elements to use
-fullLoginForm = document.querySelectorAll("form")[0].querySelectorAll("input");
-fullSignForm = document.querySelectorAll("form")[1].querySelectorAll("input"); 
+fullLoginFormCrude = document.querySelectorAll("form")[0].querySelectorAll("input");
+fullLoginForm = Array.from(fullLoginFormCrude) //array
+
+fullSignFormCrude = document.querySelectorAll("form")[1].querySelectorAll("input"); 
+fullSignForm = Array.from(fullSignFormCrude) //array
+
 console.log(fullSignForm)
 
 statusSignText = document.getElementById("signInStatusShow")
 
 //secondary functions
-const checkMissingSpaces = () => { //! to finish.
-    missingSpaces = false
-    for (var i = 0; i < fullSignForm.length; i++) {
-        if (fullSignForm[i].value === null || undefined || false) {
-            missingSpaces = true
-            break
-        }
+const checkMissingSpaces = (selectedForm) => { //! to finish.
+    for (var i = 0; i < selectedForm.length; i++) {
         console.log("iterating ", i)
-        console.log("value ", i, fullSignForm[i].value)
-    }
-    if (missingSpaces === true) {
-        alert("Fill all Sign In Spaces!")
-        throw console.error("Fill all spaces!")
+        console.log("value ", i, selectedForm[i].value)
+        if (selectedForm[i].value.length === 0) {
+            alert("Fill all Sign In Spaces!")
+            throw console.error("Fill all spaces!") //throwing always
+        }
     }
 }
 
@@ -94,7 +93,7 @@ const SignInFirst = () => {
 const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     //TODO: add condition if spaces are missing
     //check if inputs are missing
-    checkMissingSpaces()
+    checkMissingSpaces(fullSignForm)
     
     //checkPassword validation
     if (signPassword != confirmPassword){
