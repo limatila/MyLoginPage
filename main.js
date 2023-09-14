@@ -11,7 +11,7 @@ Users = {
     bannedCount: 0,
 };
 
-class User {
+class User { //might need to change method.
     //should change to save in files
     constructor(email, userName, password) {
         this.email = email;
@@ -47,13 +47,13 @@ const checkMissingSpaces = (selectedForm) => {
     }
 };
 
-const checkUsernameChar = (string) => {
+const checkUsernameChar = (username) => {
     let lettersLow = "abcdefghijklmnopqrstwxyz"; let lettersHigh = lettersLow.toUpperCase();
     let allLetters = lettersLow + lettersHigh;
 
     let ZeroLetters = 0  //if continues 0, err
-    for(i = 0; i < string.length; i++){
-        if(allLetters.includes(string[i]) === true){ //!not working: no iterations are being accused.
+    for(i = 0; i < username.length; i++){
+        if(allLetters.includes(username.charAt(i)) === true){
             ZeroLetters++
         }
     }
@@ -128,7 +128,7 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     if (signPassword != confirmPassword) {
         statusSignText.style.color = "red";
         statusSignText.textContent = "Password Check Failed!"; 
-        resetSignIn(); //!: não deveria resetar tudo, só as senhas. um throw seria bom
+        resetSignIn();
         throw console.error("Sign In Failed!");
     }
 
@@ -140,8 +140,8 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
         throw console.error("Email bad format.");
     }
     
-    //TODO: check if username has a char.
-    checkUsernameChar(signEmail)
+    //check if username has a char.
+    checkUsernameChar(signUser)
 
     //TODO: check if email is unique in Users object
     //dica: iteração nos users? function.
@@ -149,16 +149,15 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     newUser1 = new User(...signInputs);
     Users.offline.push(newUser1);
 
-    //show success
-    console.log("User Signed!");
-    document.getElementById("signInStatusShow").textContent =
-        "User Successfully Signed!";
-
     //return to initial state
     resetSignIn();
-
-    //attribute to counter
+    
+    //add in counting
     userCount("offline");
+    
+    //show success
+    console.log("User Signed!");
+    document.getElementById("signInStatusShow").textContent = "User Successfully Signed!";
 
     return 0;
 };
