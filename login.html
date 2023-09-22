@@ -23,7 +23,7 @@
             <form action="logged.html" id="loginForm" spellcheck="false">
                 <input type="email" placeholder="Email Signed Here" autocomplete="off" required autofocus><br>
                 <input type="password" placeholder="Your Password" maxlength="16" required><br>
-                <button onclick="LogIn()">LOGIN!</button>
+                <button onclick="LogIn( FullLoginForm[0].value, FullLoginForm[1].value )">LOGIN!</button>
             </form>
         </div>
 
@@ -32,10 +32,10 @@
             <h3>Sign In</h3>
             <h3 id="signInStatusShow"></h3>
             <form id="signForm" onsubmit="return false" spellcheck="false" autocomplete="off">
-                <input type="email" id="emailSignIn" placeholder="abc@email.co" required><br>
-                <input type="text" id="userNameSignIn" placeholder="Create an Username" maxlength="15" required><br>
-                <input type="password" id="PasswordSignIn" placeholder="Create a password" maxlength="16" required><br>
-                <input type="password" id="checkPasswordSignIn" placeholder="Confirm your password!" maxlength="16" hidden="true" ><br id="checkPassBr" hidden="true"><!-- TODO verification -->
+                <input type="email" id="emailSignIn" placeholder="abc@email.com"><br>
+                <input type="text" id="userNameSignIn" placeholder="Create an Username" maxlength="15"><br>
+                <input type="password" id="PasswordSignIn" placeholder="Create a password" maxlength="16"><br>
+                <input type="password" id="checkPasswordSignIn" placeholder="Confirm your password!" maxlength="16" hidden="true" ><br id="checkPassBr" hidden="true">
                 <button onclick="SignInFirst()" id="SignInButton">CREATE ACCOUNT!</button> <!-- TODO '.setAttribute()' -->
             </form>
         </div>
