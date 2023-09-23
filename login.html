@@ -20,10 +20,10 @@
         <div id="login">
             <h3>Log In</h3>
             <h3 id="loginStatusShow"></h3>
-            <form action="logged.html" id="loginForm" spellcheck="false">
+            <form action="logged.html" onsubmit="return false" id="loginForm" spellcheck="false">
                 <input type="email" placeholder="Email Signed Here" autocomplete="off" required autofocus><br>
                 <input type="password" placeholder="Your Password" maxlength="16" required><br>
-                <button onclick="LogIn( FullLoginForm[0].value, FullLoginForm[1].value )">LOGIN!</button>
+                <button onclick="LogIn( fullLoginForm[0].value, fullLoginForm[1].value )">LOGIN!</button>
             </form>
         </div>
 

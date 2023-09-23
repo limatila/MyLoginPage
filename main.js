@@ -14,7 +14,7 @@ Users = {
 };
 
 class User { //might need to change method.
-    //should change to save in files
+             //should change to save in files
     constructor(email, userName, password) {
         this.email = email;
         this.userName = userName;
@@ -35,16 +35,16 @@ fullSignFormCrude = document.querySelectorAll("form")[1].querySelectorAll("input
 fullSignForm = Array.from(fullSignFormCrude); //array
 
 console.log(fullLoginForm);
-
+statusLoginText = document.getElementById("loginStatusShow");
 statusSignText = document.getElementById("signInStatusShow");
 
-//secondary functions
+//Secondary SignIn functions
 const checkMissingSpaces = (selectedForm) => {
     for (let i = 0; i < selectedForm.length; i++) {
         console.log("value ", i, selectedForm[i].value); //debugging
         if (selectedForm[i].value.length === 0) {  //if value is >empty<, err
             alert("Fill all Sign In Spaces!");
-            statusSignText.style.color = "red";
+            statusSignText.style.color = "red"; //TODO: modify login status text
             statusSignText.textContent = "SignIn inputs are incomplete!";
            
             throw console.error("Fill all spaces! Code 1");
@@ -130,7 +130,7 @@ const resetSignIn = () => { //shall have a switch for login
 };
 
 
-//primary sign functions
+//Primary SignIn functions
 const SignInFirst = () => {
     
     //first check. One Email per User.
@@ -197,20 +197,48 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     return newUser1;//debug
 };
 
-//LogIn deve acessar a memória do banco e verificar se as infos do input coincidem
+
+//Secondary Login functions
+//search for email, verify password, push to online status.
+const searchUser = (email) => {
+    for(let i = 0; i <= Users.offline.length; i++){
+        if(email === Users.offline[i].email){
+            console.log("email found.");
+            return Users.offline[i];
+        }
+    alert("Email not found/signed. Please check your typo \nor try another email.");
+    throw console.error("Email not found in Users object. Code 6");
+    }
+};
+
+//Primary Login functions
 const LogIn = (logEmail, logPassword) => {
 
     checkMissingSpaces(fullLoginForm);
-
-
-    //search for email, push to online status.
+    
+    let selectedUser = searchUser(logEmail);
+    
+    if(logPassword != selectedUser.password){
+        alert("Wrong password! Try again 3 more times.") //work on this
+        throw console.error("Wrong password. Code 7")
+        
+        //TODO: statusLoginText.textContent...
+    }
+    
+    console.log("Login Succesfull! proceeding...")
     
     
-    //uservar.push(Users[online]);
+    selectedUser.push(Users[online]); //TODO: and remove from offline
 
+    //how to save info about onlines?
+    //how to go to logged.html?
 };
 
-const LogOut = () => {
+
+
+
+
+const LogOut = () => { //mover para a classe?
 
 
 };
