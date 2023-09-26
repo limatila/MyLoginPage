@@ -3,7 +3,7 @@
 Users = {
     description: `This is a storage for all users in the site`,
     offline: [],
-    online: [],
+    online: [], //!: remove this, count offlines with the diff from total
     banned: [],
     total: [], //total
 
@@ -201,15 +201,32 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
 //Secondary Login functions
 //search for email, verify password, push to online status.
 const searchUser = (email) => {
-    for(let i = 0; i <= Users.offline.length; i++){
-        if(email === Users.offline[i].email){
-            console.log("email found.");
-            return Users.offline[i];
+
+    UserFounded = 0;
+    try {
+            {for(let i = 0; i <= Users.offline.length; i++){
+                if(email === Users.offline[i].email){
+                    console.log("email found.");
+                    UserFounded = 1;
+
+                    return Users.offline[i];
+                }
+        } catch (err) { // TypeError
+            alert("Email not found/signed. Please check your typo \nor try another email.");
+            throw console.error("Email not found in Users object. Code 6");
         }
-    alert("Email not found/signed. Please check your typo \nor try another email.");
-    throw console.error("Email not found in Users object. Code 6");
+
+    
+    
+    if(UserFounded == 0){
+        alert("Email not found/signed. Please check your typo \nor try another email.");
+        throw console.error("Email not found in Users object. Code 6");
     }
-};
+}
+
+const searchLoggedUser = () => {
+
+}
 
 //Primary Login functions
 const LogIn = (logEmail, logPassword) => {
@@ -227,8 +244,8 @@ const LogIn = (logEmail, logPassword) => {
     
     console.log("Login Succesfull! proceeding...")
     
-    
-    selectedUser.push(Users[online]); //TODO: and remove from offline
+    //!: check if already logged!
+    Users.online.push(selectedUser); //TODO: and remove from offline
 
     //how to save info about onlines?
     //how to go to logged.html?
