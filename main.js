@@ -2,8 +2,8 @@
 //By Átila Lima
 Users = {
     description: `This is a storage for all users in the site`,
-    offline: [],
-    online: [], //!: remove this, count offlines with the diff from total
+    offline: [], //!: remove this?, count offlines with the diff from total
+    online: [], 
     banned: [],
     total: [], //total
 
@@ -199,15 +199,15 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
 
 
 //Secondary Login functions
-//search for email, verify password, push to online status.
+//search for email, verify password, push to online status, remove from offline status(or remove "offline").
 const searchUser = (email) => {
 
-    UserFounded = 0;
+    UserFound = 0;
     try {
             {for(let i = 0; i <= Users.offline.length; i++){
                 if(email === Users.offline[i].email){
                     console.log("email found.");
-                    UserFounded = 1;
+                    UserFound = 1;
 
                     return Users.offline[i];
                 }
@@ -218,12 +218,13 @@ const searchUser = (email) => {
 
     
     
-    if(UserFounded == 0){
+    if(UserFound == 0){
         alert("Email not found/signed. Please check your typo \nor try another email.");
         throw console.error("Email not found in Users object. Code 6");
     }
 }
 
+//cant login what's logged. error if already logged.
 const searchLoggedUser = () => {
 
 }
@@ -231,6 +232,8 @@ const searchLoggedUser = () => {
 //Primary Login functions
 const LogIn = (logEmail, logPassword) => {
 
+    //TODO: resetLogin(status)
+	
     checkMissingSpaces(fullLoginForm);
     
     let selectedUser = searchUser(logEmail);
@@ -239,7 +242,8 @@ const LogIn = (logEmail, logPassword) => {
         alert("Wrong password! Try again 3 more times.") //work on this
         throw console.error("Wrong password. Code 7")
         
-        //TODO: statusLoginText.textContent...
+        //TODO: statusLoginText.textContent
+	    //statusLogin.style.color = red; (push these up)
     }
     
     console.log("Login Succesfull! proceeding...")
@@ -255,7 +259,7 @@ const LogIn = (logEmail, logPassword) => {
 
 
 
-const LogOut = () => { //mover para a classe?
+const LogOut = () => { //?: mover para a classe?
 
 
 };
