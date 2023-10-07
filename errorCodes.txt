@@ -1,0 +1,11 @@
+code 1 - signin form spaces missing
+code 2 - signin password check fail
+code 3 - signin email not valid
+code 4 - signin user does not have a char
+code 5 - email already existant
+code 6 - resetForm unvalid form selected (sign/log)
+code 7 - userCount unvalid array selected
+code 8 - login form spaces missing
+code 9 - login user not in Users.offline array
+code 10 - login wrong password
+code 11 - user already logged
