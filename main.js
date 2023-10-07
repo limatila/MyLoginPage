@@ -39,15 +39,34 @@ statusLoginText = document.getElementById("loginStatusShow");
 statusSignText = document.getElementById("signInStatusShow");
 
 //Secondary SignIn functions
+const decideFormError = (selectedForm) => {
+    switch(selectedForm){
+        case fullSignForm:{
+            statusSignText.style.color = "red";
+            statusSignText.textContent = "SignIn inputs are incomplete!";
+            
+            alert("Fill all Sign In Spaces!");
+            throw console.error("Fill all spaces in SignIn! Code 1");
+            break;
+        }
+        case fullLoginForm:{
+            statusLoginText.textContent = "LogIn inputs are incomplete!";
+            
+            alert("Fill all Log In Spaces!");
+            throw console.error("Fill all spaces in LogIn! Code 8")
+        }
+        default: {
+            alert("Error ocurred! See console for info.")
+        }
+    }
+}
+
 const checkMissingSpaces = (selectedForm) => {
     for (let i = 0; i < selectedForm.length; i++) {
         console.log("value ", i, selectedForm[i].value); //debugging
         if (selectedForm[i].value.length === 0) {  //if value is >empty<, err
-            alert("Fill all Sign In Spaces!");
-            statusSignText.style.color = "red"; //TODO: modify login status text
-            statusSignText.textContent = "SignIn inputs are incomplete!";
-           
-            throw console.error("Fill all spaces! Code 1");
+
+            decideFormError(selectedForm);
         }
     }
 };
@@ -78,11 +97,12 @@ const checkExistingEmail = (userEmail) => {
 	    console.log("iterating through total: pos" + i)
 	    if(Users.total[i].email === userEmail){
 	        alert("Email already registered! \nPlease fill with another valid Email.")
-	        resetSignIn()
+	        resetForm("sign")
+
             statusSignText.style.color = "red";
             statusSignText.textContent = "Email Already Existant!";
 
-	        throw console.error("Duplicate Email! Chosse another. Code 5")
+	        throw console.error("Duplicate Email! Code 5")
 	    }
     }
 };
@@ -108,25 +128,40 @@ const userCount = (type) => {
             break;
         }
     	default: {
-    	    alert("Error ocurred! see console for info.")
-    	    console.warning("Not valid counting typo inserted. Code 6")
+    	    alert("Error ocurred! See console for info.")
+    	    console.warning("Not valid counting typo inserted. Code 7")
     	    break;
     	}
     }
 };
 
 //when finished or failed
-const resetSignIn = () => { //shall have a switch for login
-    document.getElementById("checkPasswordSignIn").hidden = true;
-    document.getElementById("checkPassBr").hidden = true;
-    document.getElementById("SignInButton").onclick = function () {
-        SignInFirst()
-    };
+const resetForm = (selectedForm) => { //shall have a switch for login
+    switch(selectedForm){
+        case "sign" || "SignIn":{
+            document.getElementById("checkPasswordSignIn").hidden = true;
+            document.getElementById("checkPassBr").hidden = true;
+            document.getElementById("SignInButton").onclick = function () {
+                SignInFirst()
+            };
 
-    fullSignForm[0].value = null;
-    fullSignForm[1].value = null;
-    fullSignForm[2].value = null;
-    fullSignForm[3].value = null;
+            fullSignForm[0].value = null;
+            fullSignForm[1].value = null;
+            fullSignForm[2].value = null;
+            fullSignForm[3].value = null;
+            break;
+        }
+        case "login" || "LogIn": {
+            statusLoginText.textContent = undefined;
+
+            fullLoginForm[0].value = null;
+            fullLoginForm[1].value = null;
+        }
+        default:{
+            alert("Error ocurred! See console for info.")
+            console.warning("Not valid form inserted to reset. Code 6")
+        }
+    }
 };
 
 
@@ -144,9 +179,7 @@ const SignInFirst = () => {
         SignIn( fullSignForm[0].value, fullSignForm[1].value, fullSignForm[2].value, fullSignForm[3].value )
      };
 
-    if (statusSignText.textContent !== undefined) {
-        statusSignText.textContent = undefined;
-    }
+    statusSignText.textContent = undefined;
 };
 
 const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
@@ -157,9 +190,9 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     if (signPassword != confirmPassword) {
         statusSignText.style.color = "red";
         statusSignText.textContent = "Password Check Failed!"; 
-        resetSignIn();
+        resetForm("sign");
 
-        throw console.error("Sign In Failed! Code 2");
+        throw console.error("Password's check don't match! Code 2");
     }
 
     signInputs = [signEmail, signUser, signPassword];
@@ -178,13 +211,15 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     //check if username has a char.
     checkUsernameChar(signUser)
     
+    //second check! if user change it after the first, it'll pass
+    checkExistingEmail(fullSignForm[0].value)
 
     newUser1 = new User(...signInputs);
     Users.offline.push(newUser1);
     Users.total.push(newUser1);
 
     //return to initial state
-    resetSignIn();
+    resetForm("sign");
     
     //add in counting
     userCount("offline");
@@ -193,62 +228,66 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     //show success
     console.log("User Signed!");
     statusSignText.textContent = "User Successfully Signed!";
-
-    return newUser1;//debug
 };
 
 
 //Secondary Login functions
 //search for email, verify password, push to online status, remove from offline status(or remove "offline").
 const searchUser = (email) => {
-
-    UserFound = 0;
     try {
         for(let i = 0; i <= Users.offline.length; i++){
                 if(email === Users.offline[i].email){
                     console.log("email found.");
-                    UserFound = 1;
 
                     return Users.offline[i];
                 }
             }
-        } catch(err) { // TypeError
+    } catch(err) {
+        if(err instanceof TypeError){
             alert("Email not found/signed. Please check your typo \nor try another email.");
-            throw console.error("Email not found in Users object. Code 6");
-        }
-    
-    if(UserFound == 0){
-        alert("Email not found/signed. Please check your typo \nor try another email.");
-        throw console.error("Email not found in Users object. Code 6");
+            throw console.error(err.name + ": Email not found in Users object. Code 9");
+        } else {throw err}
     }
 }
 
 //cant login what's logged. error if already logged.
-const searchLoggedUser = () => {
+const searchLoggedUser = (objectUser) => {
+    for(let i = 0; i <= Users.offline.length; i++){
+        console.log("iterating logged, pos" + i);
 
+        if(objectUser.email === Users.online[i].email){ //err if found.
+            statusLoginText.textContent = "Account already logged in!"
+
+            alert("Email already logged in! However's logged need to leave it. \nTry another account to enter!")
+            throw console.error("Email already in logged array! Code 11")
+        }
+    }
 }
 
 //Primary Login functions
 const LogIn = (logEmail, logPassword) => {
-
-    //TODO: resetLogin(status)
+    statusLoginText.textContent = undefined
 	
     checkMissingSpaces(fullLoginForm);
     
+    //search and storing user
     let selectedUser = searchUser(logEmail);
     
     if(logPassword != selectedUser.password){
-        alert("Wrong password! Try again 3 more times.") //work on this
-        throw console.error("Wrong password. Code 7")
+        statusLoginText.textContent = "Password Check Failed!";
         
-        //TODO: statusLoginText.textContent
-	    //statusLogin.style.color = red; (push these up)
+        alert("Wrong account password! Try again."); //should allow only 3 attempts, after that, count 30mins to try again.
+        throw console.error("Wrong password. Code 10");
     }
+
+    //check if already logged
+    searchLoggedUser(selectedUser);
     
-    console.log("Login Succesfull! proceeding...")
+    console.log("Login Succesfull! proceeding...");
     
-    //!: check if already logged!
-    Users.online.push(selectedUser); //TODO: and remove from offline
+    Users.online.push(selectedUser); //TODO: and remove from offline (or remove offline)
+
+    resetForm("login");
 
     //how to save info about onlines?
     //how to go to logged.html?
@@ -260,4 +299,5 @@ const LogOut = () => { //?: mover para a classe?
 
 };
 
+//! add method to quickly add users in console
 //admins?

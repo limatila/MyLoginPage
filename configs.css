@@ -27,3 +27,6 @@ form{
 #signInStatusShow{
     color: greenyellow;
 }
+#logInStatusShow{
+    color: red;
+}
