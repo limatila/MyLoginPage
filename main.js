@@ -204,19 +204,18 @@ const searchUser = (email) => {
 
     UserFound = 0;
     try {
-            {for(let i = 0; i <= Users.offline.length; i++){
+        for(let i = 0; i <= Users.offline.length; i++){
                 if(email === Users.offline[i].email){
                     console.log("email found.");
                     UserFound = 1;
 
                     return Users.offline[i];
                 }
-        } catch (err) { // TypeError
+            }
+        } catch(err) { // TypeError
             alert("Email not found/signed. Please check your typo \nor try another email.");
             throw console.error("Email not found in Users object. Code 6");
         }
-
-    
     
     if(UserFound == 0){
         alert("Email not found/signed. Please check your typo \nor try another email.");
@@ -254,9 +253,6 @@ const LogIn = (logEmail, logPassword) => {
     //how to save info about onlines?
     //how to go to logged.html?
 };
-
-
-
 
 
 const LogOut = () => { //?: mover para a classe?
