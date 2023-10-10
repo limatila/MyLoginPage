@@ -1,4 +1,4 @@
-//Site com Login, SignIn, verificações de formulário e armazenamento de usuários
+//Site com Login, SignUp, verificações de formulário e armazenamento de usuários
 //By Átila Lima
 Users = {
     description: `This is a storage for all users in the site`,
@@ -37,7 +37,7 @@ console.log(fullLoginForm);
 statusLoginText = document.getElementById("loginStatusShow");
 statusSignText = document.getElementById("signUpStatusShow");
 
-//Secondary SignIn functions
+//Secondary SignUp functions
 const decideFormError = (selectedForm) => {
     switch(selectedForm){
         case fullSignForm:{
@@ -138,9 +138,9 @@ const userCount = (type) => {
 const resetForm = (selectedForm) => { //shall have a switch for login
     switch(selectedForm){
         case "sign" || "SignUp":{
-            document.getElementById("checkPasswordSignIn").hidden = true;
+            document.getElementById("checkPasswordSignUp").hidden = true;
             document.getElementById("checkPassBr").hidden = true;
-            document.getElementById("SignInButton").onclick = function () {
+            document.getElementById("SignUpButton").onclick = function () {
                 SignUpFirst()
             };
 
@@ -176,7 +176,7 @@ const SignUpFirst = () => {
     document.getElementById("checkPassBr").hidden = false;
 
     document.getElementById("SignUpButton").onclick = function () { 
-        SignIn( fullSignForm[0].value, fullSignForm[1].value, fullSignForm[2].value, fullSignForm[3].value )
+        SignUp( fullSignForm[0].value, fullSignForm[1].value, fullSignForm[2].value, fullSignForm[3].value )
      };
 
     statusSignText.textContent = undefined;
