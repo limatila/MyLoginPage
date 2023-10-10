@@ -1,4 +1,4 @@
-//Site com Login, SignIn, verificações de formulário e armazenamento de usuários
+//Site com Login, SignUp, verificações de formulário e armazenamento de usuários
 //By Átila Lima
 Users = {
     description: `This is a storage for all users in the site`,
@@ -35,22 +35,22 @@ fullSignForm = Array.from(fullSignFormCrude); //array
 
 console.log(fullLoginForm);
 statusLoginText = document.getElementById("loginStatusShow");
-statusSignText = document.getElementById("signInStatusShow");
+statusSignText = document.getElementById("signUpStatusShow");
 
-//Secondary SignIn functions
+//Secondary SignUp functions
 const decideFormError = (selectedForm) => {
     switch(selectedForm){
         case fullSignForm:{
             statusSignText.style.color = "red";
-            statusSignText.textContent = "SignIn inputs are incomplete!";
+            statusSignText.textContent = "SignUp inputs are incomplete!";
             
-            alert("Fill all Sign In Spaces!");
-            throw console.error("Fill all spaces in SignIn! Code 1");
+            alert("Fill all SignUp Spaces!");
+            throw console.error("Fill all spaces in SignUp! Code 1");
         }
         case fullLoginForm:{
             statusLoginText.textContent = "LogIn inputs are incomplete!";
             
-            alert("Fill all Log In Spaces!");
+            alert("Fill all LogIn Spaces!");
             throw console.error("Fill all spaces in LogIn! Code 8")
         }
         default: {
@@ -106,10 +106,11 @@ const checkExistingEmail = (userEmail) => {
     }
 };
 
-//counts into Users variables. To use in login and signin
+//counts into Users variables. To use in login and signup
 const userCount = (type) => {
     //counting offlines
     Users["offlineCount"] = Users["total"].length - Users["online"].length;
+	//TODO: MOVE TO BOTTOM
 
     quantityUsers = Users[type].length;
     switch (type) {
@@ -136,11 +137,11 @@ const userCount = (type) => {
 //when finished or failed
 const resetForm = (selectedForm) => { //shall have a switch for login
     switch(selectedForm){
-        case "sign" || "SignIn":{
-            document.getElementById("checkPasswordSignIn").hidden = true;
+        case "sign" || "SignUp":{
+            document.getElementById("checkPasswordSignUp").hidden = true;
             document.getElementById("checkPassBr").hidden = true;
-            document.getElementById("SignInButton").onclick = function () {
-                SignInFirst()
+            document.getElementById("SignUpButton").onclick = function () {
+                SignUpFirst()
             };
 
             fullSignForm[0].value = null;
@@ -164,24 +165,24 @@ const resetForm = (selectedForm) => { //shall have a switch for login
 };
 
 
-//Primary SignIn functions
-const SignInFirst = () => {
+//Primary SignUp functions
+const SignUpFirst = () => {
     
     //first check. One Email per User.
     checkExistingEmail(fullSignForm[0].value)
     
     statusSignText.style.color = "greenyellow";
-    document.getElementById("checkPasswordSignIn").hidden = false;
+    document.getElementById("checkPasswordSignUp").hidden = false;
     document.getElementById("checkPassBr").hidden = false;
 
-    document.getElementById("SignInButton").onclick = function () { 
-        SignIn( fullSignForm[0].value, fullSignForm[1].value, fullSignForm[2].value, fullSignForm[3].value )
+    document.getElementById("SignUpButton").onclick = function () { 
+        SignUp( fullSignForm[0].value, fullSignForm[1].value, fullSignForm[2].value, fullSignForm[3].value )
      };
 
     statusSignText.textContent = undefined;
 };
 
-const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
+const SignUp = (signEmail, signUser, signPassword, confirmPassword) => {
     //check if inputs are missing
     checkMissingSpaces(fullSignForm);
 
