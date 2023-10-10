@@ -2,9 +2,8 @@
 //By Átila Lima
 Users = {
     description: `This is a storage for all users in the site`,
-    offline: [], //!: remove this?, count offlines with the diff from total
     online: [], 
-    banned: [],
+    banned: [], //TODO: develop admins
     total: [], //total
 
     offlineCount: 0,
@@ -47,7 +46,6 @@ const decideFormError = (selectedForm) => {
             
             alert("Fill all Sign In Spaces!");
             throw console.error("Fill all spaces in SignIn! Code 1");
-            break;
         }
         case fullLoginForm:{
             statusLoginText.textContent = "LogIn inputs are incomplete!";
@@ -57,6 +55,7 @@ const decideFormError = (selectedForm) => {
         }
         default: {
             alert("Error ocurred! See console for info.")
+            break;
         }
     }
 }
@@ -109,12 +108,11 @@ const checkExistingEmail = (userEmail) => {
 
 //counts into Users variables. To use in login and signin
 const userCount = (type) => {
+    //counting offlines
+    Users["offlineCount"] = Users["total"].length - Users["online"].length;
+
     quantityUsers = Users[type].length;
     switch (type) {
-        case "offline": {
-            Users["offlineCount"] = quantityUsers;
-            break;
-        }
         case "online": {
             Users["onlineCount"] = quantityUsers;
             break;
@@ -156,10 +154,11 @@ const resetForm = (selectedForm) => { //shall have a switch for login
 
             fullLoginForm[0].value = null;
             fullLoginForm[1].value = null;
+            break;
         }
         default:{
             alert("Error ocurred! See console for info.")
-            console.warning("Not valid form inserted to reset. Code 6")
+            console.error("Not valid form inserted to reset. Code 6")
         }
     }
 };
@@ -215,14 +214,12 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
     checkExistingEmail(fullSignForm[0].value)
 
     newUser1 = new User(...signInputs);
-    Users.offline.push(newUser1);
     Users.total.push(newUser1);
 
     //return to initial state
     resetForm("sign");
     
     //add in counting
-    userCount("offline");
     userCount("total");
     
     //show success
@@ -235,11 +232,11 @@ const SignIn = (signEmail, signUser, signPassword, confirmPassword) => {
 //search for email, verify password, push to online status, remove from offline status(or remove "offline").
 const searchUser = (email) => {
     try {
-        for(let i = 0; i <= Users.offline.length; i++){
-                if(email === Users.offline[i].email){
+        for(let i = 0; i <= Users.total.length; i++){
+                if(email === Users.total[i].email){
                     console.log("email found.");
 
-                    return Users.offline[i];
+                    return Users.total[i];
                 }
             }
     } catch(err) {
@@ -252,14 +249,14 @@ const searchUser = (email) => {
 
 //cant login what's logged. error if already logged.
 const searchLoggedUser = (objectUser) => {
-    for(let i = 0; i <= Users.offline.length; i++){
+    for(let i = 0; i < Users.online.length; i++){
         console.log("iterating logged, pos" + i);
 
         if(objectUser.email === Users.online[i].email){ //err if found.
-            statusLoginText.textContent = "Account already logged in!"
+            statusLoginText.textContent = "Account already logged in!";
 
-            alert("Email already logged in! However's logged need to leave it. \nTry another account to enter!")
-            throw console.error("Email already in logged array! Code 11")
+            alert("Email already logged in! However's logged need to leave it. \nTry another account to enter!");
+            throw console.error("Email already in logged array! Code 11");
         }
     }
 }
@@ -276,7 +273,7 @@ const LogIn = (logEmail, logPassword) => {
     if(logPassword != selectedUser.password){
         statusLoginText.textContent = "Password Check Failed!";
         
-        alert("Wrong account password! Try again."); //should allow only 3 attempts, after that, count 30mins to try again.
+        alert("Wrong account password! Try again."); //?: should allow only 3 attempts, after that, count 30mins to try again.
         throw console.error("Wrong password. Code 10");
     }
 
@@ -285,7 +282,9 @@ const LogIn = (logEmail, logPassword) => {
     
     console.log("Login Succesfull! proceeding...");
     
-    Users.online.push(selectedUser); //TODO: and remove from offline (or remove offline)
+    //pushing and couting
+    Users.online.push(selectedUser);
+    userCount("online");
 
     resetForm("login");
 
