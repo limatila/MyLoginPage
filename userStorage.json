@@ -1,0 +1,12 @@
+Users = {
+    "description": `This is a storage for all users in the site`,
+    
+    "online": [], 
+    "banned": [],
+    "total": [],
+
+    "offlineCount": 0,
+    "onlineCount": 0,
+    "bannedCount": 0,
+    "totalCount": 0
+};
