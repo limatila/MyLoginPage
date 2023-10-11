@@ -12,7 +12,7 @@ Users = {
     totalCount: 0
 };
 
-class User { //might need to change method.
+class User {
              //should change to save in files
     constructor(email, userName, password) {
         this.email = email;
@@ -27,7 +27,7 @@ class User { //might need to change method.
 }
 
 //defining Elements to use
-fullLoginFormCrude = document.querySelectorAll("form")[0].querySelectorAll("input");
+fullLoginFormCrude = document.querySelectorAll("form")[0].querySelectorAll("input"); //! erroing in logged.html (should create another js)
 fullLoginForm = Array.from(fullLoginFormCrude); //array
 
 fullSignFormCrude = document.querySelectorAll("form")[1].querySelectorAll("input");
@@ -283,21 +283,18 @@ const LogIn = (logEmail, logPassword) => {
     
     console.log("Login Succesfull! proceeding...");
     
-    //pushing and couting
     Users.online.push(selectedUser);
     userCount("online");
 
     resetForm("login");
 
-    //how to save info about onlines?
-    //how to go to logged.html?
+    //!: how to save info about Users AND the current session?
+
+    //redirect to logged page
+    window.location.assign("logged.html");
 };
 
 
-const LogOut = () => { //?: mover para a classe?
+//!: add method to quickly add users in console
 
-
-};
-
-//! add method to quickly add users in console
-//admins?
+//TODO: admins
