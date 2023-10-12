@@ -1,5 +1,5 @@
-Users = {
-    "description": `This is a storage for all users in the site`,
+{
+    "description": "This is a storage for all users in the site",
     
     "online": [], 
     "banned": [],
