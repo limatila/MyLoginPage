@@ -288,13 +288,13 @@ const LogIn = (logEmail, logPassword) => {
 
     resetForm("login");
 
-    //!: how to save info about Users AND the current session?
-
-    //redirect to logged page
+    //redirect to 'logged' page
     window.location.assign("logged.html");
 };
 
+//!: use Json to save 'Users';
+//!: and window.localStorage to know which account is logged.
 
-//!: add method to quickly add users in console
+//TODO: add method to quickly add users in console
 
 //TODO: admins
