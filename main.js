@@ -26,7 +26,7 @@ class User {
     }
 }
 
-//defining Elements to use
+//defining Elements to use---------------------------
 fullLoginFormCrude = document.querySelectorAll("form")[0].querySelectorAll("input"); //! erroing in logged.html (should create another js)
 fullLoginForm = Array.from(fullLoginFormCrude); //array
 
@@ -37,7 +37,7 @@ console.log(fullLoginForm);
 statusLoginText = document.getElementById("loginStatusShow");
 statusSignText = document.getElementById("signUpStatusShow");
 
-//Secondary SignUp functions
+//Secondary SignUp functions---------------------------
 const decideFormError = (selectedForm) => {
     switch(selectedForm){
         case fullSignForm:{
@@ -165,7 +165,7 @@ const resetForm = (selectedForm) => { //shall have a switch for login
 };
 
 
-//Primary SignUp functions
+//Primary SignUp functions---------------------------
 const SignUpFirst = () => {
     
     //first check. One Email per User.
@@ -229,7 +229,7 @@ const SignUp = (signEmail, signUser, signPassword, confirmPassword) => {
 };
 
 
-//Secondary Login functions
+//Secondary Login functions---------------------------
 //search for email, verify password, push to online status, remove from offline status(or remove "offline").
 const searchUser = (email) => {
     try {
@@ -262,7 +262,7 @@ const searchLoggedUser = (objectUser) => {
     }
 }
 
-//Primary Login functions
+//Primary Login functions---------------------------
 const LogIn = (logEmail, logPassword) => {
     statusLoginText.textContent = undefined
 	
