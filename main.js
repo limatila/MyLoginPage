@@ -124,7 +124,7 @@ const userCount = (type) => {
         } 
         case "total": {
             Users["totalCount"] = quantityUsers;
-            break;
+            break;  //!REFACTOR SELECTION
         }
     	default: {
     	    alert("Error ocurred! See console for info.")
@@ -147,7 +147,7 @@ const resetForm = (selectedForm) => { //shall have a switch for login
             fullSignForm[0].value = null;
             fullSignForm[1].value = null;
             fullSignForm[2].value = null;
-            fullSignForm[3].value = null;
+            fullSignForm[3].value = null; //!REFACTOR IN FOR
             break;
         }
         case "login" || "LogIn": {
