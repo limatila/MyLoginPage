@@ -3,7 +3,7 @@
 Users = {
     description: `This is a storage for all users in the site`,
     online: [], 
-    banned: [], //TODO: develop admins
+    banned: [],              //TODO: develop admins
     total: [], //total
 
     offlineCount: 0,
@@ -54,7 +54,7 @@ const decideFormError = (selectedForm) => {
             throw console.error("Fill all spaces in LogIn! Code 8")
         }
         default: {
-            alert("Error ocurred! See console for info.")
+            alert("Error ocurred! See console for info.") //! what info? 
             break;
         }
     }
@@ -108,30 +108,21 @@ const checkExistingEmail = (userEmail) => {
 
 //counts into Users variables. To use in login and signup
 const userCount = (type) => {
+    let typeSelectedVar = type.concat("Count");
+
+    try {
+        quantityUsers = Users[type].length;
+    } catch (err) { //TypeError
+        if(err instanceof TypeError){
+            alert("Error ocurred! See console for info.");
+            throw console.error("Not valid counting typo inserted. Code 7");
+        } else {throw err};
+    };
+
+    Users[typeSelectedVar] = quantityUsers;
+
     //counting offlines
     Users["offlineCount"] = Users["total"].length - Users["online"].length;
-	//TODO: MOVE TO BOTTOM
-
-    quantityUsers = Users[type].length;
-    switch (type) {
-        case "online": {
-            Users["onlineCount"] = quantityUsers;
-            break;
-        }
-        case "banned": {
-            Users["bannedCount"] = quantityUsers;
-            break;
-        } 
-        case "total": {
-            Users["totalCount"] = quantityUsers;
-            break;  //!REFACTOR SELECTION
-        }
-    	default: {
-    	    alert("Error ocurred! See console for info.")
-    	    console.warning("Not valid counting typo inserted. Code 7")
-    	    break;
-    	}
-    }
 };
 
 //when finished or failed
@@ -144,17 +135,19 @@ const resetForm = (selectedForm) => { //shall have a switch for login
                 SignUpFirst()
             };
 
-            fullSignForm[0].value = null;
-            fullSignForm[1].value = null;
-            fullSignForm[2].value = null;
-            fullSignForm[3].value = null; //!REFACTOR IN FOR
+            for(i = 0; i < fullSignForm.length; i++){
+                currentInput = fullSignForm[i];
+                currentInput.value = null;
+            };
             break;
         }
         case "login" || "LogIn": {
             statusLoginText.textContent = undefined;
 
-            fullLoginForm[0].value = null;
-            fullLoginForm[1].value = null;
+            for(i = 0; i < fullLoginForm.length; i++){
+                currentInput = fullLoginForm[i];
+                currentInput.value = null;
+            };
             break;
         }
         default:{
@@ -272,10 +265,12 @@ const LogIn = (logEmail, logPassword) => {
     let selectedUser = searchUser(logEmail);
     
     if(logPassword != selectedUser.password){
+        statusLoginText.style.color = "red";
         statusLoginText.textContent = "Password Check Failed!";
         
-        alert("Wrong account password! Try again."); //?: should allow only 3 attempts, after that, count 30mins to try again.
+        alert("Wrong account password! Try again."); //? why does the alert come before every other line??
         throw console.error("Wrong password. Code 10");
+        //TODO: should allow only 3 attempts, after that, count 30mins to try again.
     }
 
     //check if already logged
@@ -284,6 +279,7 @@ const LogIn = (logEmail, logPassword) => {
     console.log("Login Succesfull! proceeding...");
     
     Users.online.push(selectedUser);
+    //!: If any code bellow this line cause error, the account will bug
     userCount("online");
 
     resetForm("login");
